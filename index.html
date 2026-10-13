@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#8d477e">
+  <meta name="description" content="Calculadora solar interactiva para estimar paneles solares, banco de baterías, inversor y controlador.">
+  <title>LUMETZA | Calculadora solar</title>
+
+  <!-- PWA Manifest & App Icons -->
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" type="image/svg+xml" href="icons/icon.svg">
+  <link rel="icon" type="image/png" sizes="48x48" href="icons/favicon-48.png">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+
+  <!-- Apple iOS Mobile Web App Meta -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="LUMETZA">
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <div class="top">
+    <div class="brand">
+      <div class="logo" aria-label="Logo L">L</div>
+      <div>
+        <h1>LUMETZA</h1>
+        <p>Calculadora solar interactiva</p>
+      </div>
+    </div>
+    <div class="chip">☀ Energía a tu medida</div>
+  </div>
+  <div class="hero">
+    <h2>Tu energía, diseñada con luz.</h2>
+    <p>Calcula el consumo de tus equipos y estima paneles, banco de baterías, inversor y controlador en un solo lugar.</p>
+  </div>
+</header>
+
+<main>
+  <section class="card">
+    <h2 class="section-title"><span class="icon">⚙️</span> Parámetros del sistema</h2>
+    <div class="controls">
+      <div class="field">
+        <label for="sun">Horas solares pico al día</label>
+        <input id="sun" type="number" min="1" step=".1" value="6">
+      </div>
+      <div class="field">
+        <label for="panelW">Potencia por panel (W)</label>
+        <input id="panelW" type="number" min="1" step="1" value="100">
+      </div>
+      <div class="field">
+        <label for="panelEff">Eficiencia del sistema/panel (%)</label>
+        <input id="panelEff" type="number" min="1" max="100" step="1" value="60">
+      </div>
+      <div class="field">
+        <label for="storage">Días de almacenamiento</label>
+        <input id="storage" type="number" min="1" max="30" step="1" value="5">
+      </div>
+      <div class="field">
+        <label for="bankV">Voltaje del banco (V)</label>
+        <select id="bankV">
+          <option>12</option>
+          <option selected>24</option>
+          <option>48</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="battery">Tipo de batería</label>
+        <select id="battery">
+          <option value="127">12 V · 127 Ah</option>
+          <option value="220">12 V · 220 Ah</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="dod">Profundidad de descarga recomendada (%)</label>
+        <input id="dod" type="number" min="10" max="100" value="80">
+      </div>
+      <div class="field">
+        <label for="batEff">Eficiencia de batería (%)</label>
+        <input id="batEff" type="number" min="1" max="100" value="90">
+      </div>
+      <div class="field">
+        <label for="invEff">Eficiencia del inversor (%)</label>
+        <input id="invEff" type="number" min="1" max="100" value="85">
+      </div>
+      <div class="field">
+        <label for="controllerEff">Factor para controlador</label>
+        <input id="controllerEff" type="number" min="1" step=".1" value="1.25">
+        <div class="hint">Margen de diseño (ej. 1.25)</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2 class="section-title"><span class="icon">🔌</span> Tabla de equipos y consumo</h2>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Equipo</th>
+            <th>Cantidad</th>
+            <th>Voltaje (V)</th>
+            <th>Corriente (A)</th>
+            <th>Potencia (W)</th>
+            <th>Potencia total (W)</th>
+            <th>Tiempo (h/día)</th>
+            <th>Energía (Wh/día)</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="rows">
+          <!-- Las filas se cargan dinámicamente con app.js -->
+        </tbody>
+      </table>
+    </div>
+    <div class="table-actions">
+      <button class="primary" id="add">＋ Agregar equipo</button>
+      <button class="secondary" id="reset">Restaurar ejemplo</button>
+    </div>
+    <p class="hint">Puedes editar directamente las celdas de equipo, cantidad, voltaje, corriente, potencia y horas. La energía y los totales se actualizan automáticamente.</p>
+  </section>
+
+  <nav class="result-tabs" role="tablist" aria-label="Secciones de resultados">
+    <button class="tab-button active" id="tab-consumo" role="tab" aria-selected="true" aria-controls="panel-consumo" data-panel="panel-consumo">✨ Consumo</button>
+    <button class="tab-button" id="tab-componentes" role="tab" aria-selected="false" aria-controls="panel-componentes" data-panel="panel-componentes">🔋 Componentes</button>
+    <button class="tab-button" id="tab-almacenamiento" role="tab" aria-selected="false" aria-controls="panel-almacenamiento" data-panel="panel-almacenamiento">🌙 Almacenamiento</button>
+  </nav>
+
+  <!-- Panel: Consumo -->
+  <div class="tab-panel active" id="panel-consumo" role="tabpanel" aria-labelledby="tab-consumo">
+    <section class="card">
+      <h2 class="section-title"><span class="icon">✨</span> Resumen del consumo</h2>
+      <div class="metrics">
+        <div class="metric">
+          <div class="k">Energía diaria total</div>
+          <div class="v" id="daily">2,452.8</div>
+          <small>Wh por día</small>
+        </div>
+        <div class="metric">
+          <div class="k">Potencia simultánea total</div>
+          <div class="v" id="load">2,532.4</div>
+          <small>W</small>
+        </div>
+        <div class="metric">
+          <div class="k">Potencia solar requerida</div>
+          <div class="v" id="solarNeed">681.3 W</div>
+          <small>W considerando eficiencia</small>
+        </div>
+        <div class="metric">
+          <div class="k">Paneles necesarios</div>
+          <div class="v" id="panelCount">7</div>
+          <small id="panelDesc">7 × 100 W = 700 W instalados</small>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Panel: Componentes -->
+  <div class="tab-panel" id="panel-componentes" role="tabpanel" aria-labelledby="tab-componentes" hidden>
+    <section class="card">
+      <h2 class="section-title"><span class="icon">🔋</span> Componentes recomendados</h2>
+      <div class="results-grid">
+        <div class="result">
+          <h3><span class="icon">⚡</span> Inversor sugerido</h3>
+          <div class="big" id="comp-inv">3,000 W</div>
+          <p>Capacidad mínima recomendada para soportar picos y demanda simultánea con margen de seguridad.</p>
+          <p>Voltaje de entrada CD: <strong id="comp-inv-v">24 V</strong></p>
+        </div>
+        <div class="result">
+          <h3><span class="icon">🎛️</span> Controlador de carga</h3>
+          <div class="big" id="comp-ctrl">40 A</div>
+          <p>Dimensionado según la potencia total de paneles y el voltaje del banco de baterías con factor de seguridad.</p>
+          <p>Corriente calculada: <strong id="comp-ctrl-a">36.5 A</strong></p>
+        </div>
+        <div class="result">
+          <h3><span class="icon">☀️</span> Arreglo fotovoltaico</h3>
+          <div class="big" id="comp-pv">700 W</div>
+          <p>Total de paneles solares recomendados para cubrir la demanda diaria con las horas solares pico.</p>
+          <p>Configuración: <strong id="comp-pv-desc">7 paneles de 100 W</strong></p>
+        </div>
+      </div>
+      <div class="notice">
+        💡 <strong>Recomendación:</strong> Se aconseja utilizar inversores de onda senoidal pura y controladores MPPT para maximizar la vida útil de los equipos y la eficiencia del sistema.
+      </div>
+    </section>
+  </div>
+
+  <!-- Panel: Almacenamiento -->
+  <div class="tab-panel" id="panel-almacenamiento" role="tabpanel" aria-labelledby="tab-almacenamiento" hidden>
+    <section class="card">
+      <h2 class="section-title"><span class="icon">🌙</span> Banco de baterías</h2>
+      <div class="results-grid">
+        <div class="result">
+          <h3><span class="icon">📦</span> Capacidad requerida</h3>
+          <div class="big" id="bat-cap">709.7 Ah</div>
+          <p>Capacidad útil a <strong id="bat-bank-v">24 V</strong> para cubrir los días de autonomía establecidos.</p>
+          <p>Energía acumulada: <strong id="bat-wh">12,264 Wh útiles</strong></p>
+        </div>
+        <div class="result">
+          <h3><span class="icon">🔋</span> Baterías necesarias</h3>
+          <div class="big" id="bat-qty">12 baterías</div>
+          <p>Basado en el modelo seleccionado de <strong id="bat-model">12 V · 127 Ah</strong>.</p>
+          <p>Arreglo: <strong id="bat-config">2 en serie × 6 ramas en paralelo</strong></p>
+        </div>
+        <div class="result">
+          <h3><span class="icon">🛡️</span> Autonomía y salud</h3>
+          <div class="big" id="bat-days">5 días</div>
+          <p>Profundidad de descarga límite (DoD): <strong id="bat-dod-val">80%</strong></p>
+          <p>Eficiencia estimada: <strong id="bat-eff-val">90%</strong></p>
+        </div>
+      </div>
+      <div class="notice">
+        ⚠️ <strong>Cuidado del banco:</strong> Mantener la profundidad de descarga dentro del valor recomendado prolonga drásticamente la vida útil del banco de baterías.
+      </div>
+    </section>
+  </div>
+</main>
+
+<footer>LUMETZA · Energía limpia, cálculos claros ✦</footer>
+
+<script src="app.js"></script>
+</body>
+</html>

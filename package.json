@@ -1,0 +1,13 @@
+{
+  "name": "lumetza-calculadora-solar",
+  "version": "1.0.0",
+  "description": "Calculadora solar interactiva PWA instalable",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": ["pwa", "solar", "calculator", "lumetza"],
+  "author": "",
+  "license": "MIT"
+}

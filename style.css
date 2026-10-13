@@ -1,0 +1,442 @@
+@charset "utf-8";
+
+:root {
+  --rose: #1689e8;
+  --rose2: #51b6ff;
+  --pink: #0b1d31;
+  --lilac: #102c47;
+  --ink: #eef7ff;
+  --muted: #9cb4c9;
+  --white: #061321;
+  --line: #1c4262;
+  --gold: #f5c76c;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0px;
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  color: var(--ink);
+  background: radial-gradient(at 50% -10%, rgb(23, 59, 93) 0%, rgb(7, 26, 45) 42%, rgb(2, 8, 18) 100%);
+  min-height: 100vh;
+}
+
+header {
+  background: linear-gradient(120deg, rgba(2, 10, 21, 0.867), rgba(8, 33, 58, 0.933) 58%, rgba(12, 53, 87, 0.933)), url("assets/solar-hero.avif") center 45% / cover;
+  color: white;
+  padding: 22px clamp(16px, 4vw, 48px) 28px;
+  position: relative;
+  overflow: hidden;
+  border-bottom: 1px solid rgb(27, 99, 149);
+}
+
+header::after {
+  content: "";
+  position: absolute;
+  width: 270px;
+  height: 270px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 50%;
+  right: -65px;
+  top: -125px;
+  box-shadow: rgba(255, 255, 255, 0.043) 0px 0px 0px 24px, rgba(255, 255, 255, 0.043) 0px 0px 0px 48px;
+}
+
+.top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  position: relative;
+  z-index: 1;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo {
+  width: 48px;
+  height: 48px;
+  border-radius: 16px;
+  background: linear-gradient(145deg, rgb(6, 19, 33), rgb(11, 43, 73));
+  color: rgb(81, 182, 255);
+  display: grid;
+  place-items: center;
+  font-weight: 900;
+  font-size: 30px;
+  box-shadow: rgba(22, 137, 232, 0.333) 0px 7px 24px;
+  border: 1px solid rgb(35, 141, 232);
+}
+
+.brand h1 {
+  font-size: clamp(1.45rem, 4vw, 2rem);
+  letter-spacing: 0.12em;
+  margin: 0px;
+}
+
+.brand p {
+  margin: 3px 0px 0px;
+  color: rgb(255, 234, 246);
+  font-size: 0.84rem;
+}
+
+.chip {
+  border: 1px solid rgba(255, 255, 255, 0.44);
+  border-radius: 999px;
+  padding: 8px 12px;
+  font-size: 0.78rem;
+  background: rgba(255, 255, 255, 0.094);
+}
+
+.hero {
+  position: relative;
+  z-index: 1;
+  margin-top: 22px;
+  max-width: 720px;
+}
+
+.hero h2 {
+  font-size: clamp(1.35rem, 3.6vw, 2.25rem);
+  line-height: 1.13;
+  margin: 0px 0px 8px;
+}
+
+.hero p {
+  margin: 0px;
+  color: rgb(255, 237, 247);
+  max-width: 600px;
+  line-height: 1.5;
+}
+
+main {
+  width: min(1200px, 100%);
+  margin: auto;
+  padding: 22px clamp(12px, 3vw, 32px) 50px;
+}
+
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 1.1rem;
+  margin: 0px 0px 14px;
+}
+
+.section-title .icon {
+  background: rgb(16, 44, 71);
+  border-radius: 12px;
+  padding: 8px;
+}
+
+.card {
+  background: linear-gradient(145deg, rgba(11, 28, 45, 0.937), rgba(7, 21, 37, 0.96));
+  border: 1px solid rgb(24, 60, 89);
+  box-shadow: rgba(0, 0, 0, 0.333) 0px 14px 35px;
+  border-radius: 20px;
+  padding: 18px;
+  margin-bottom: 18px;
+  backdrop-filter: blur(8px);
+}
+
+.controls {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+  gap: 13px;
+}
+
+.field label {
+  display: block;
+  font-size: 0.79rem;
+  font-weight: 700;
+  color: var(--muted);
+  margin: 0px 0px 6px;
+}
+
+.field input,
+.field select {
+  width: 100%;
+  padding: 11px 12px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: rgb(6, 19, 33);
+  color: var(--ink);
+  font: inherit;
+  outline: none;
+  min-width: 0px;
+}
+
+.field input:focus,
+.field select:focus {
+  border-color: var(--rose2);
+  box-shadow: rgba(199, 125, 176, 0.133) 0px 0px 0px 3px;
+}
+
+.hint {
+  font-size: 0.75rem;
+  color: var(--muted);
+  margin-top: 5px;
+}
+
+.table-wrap {
+  overflow-x: auto;
+  border-radius: 14px;
+  border: 1px solid var(--line);
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  min-width: 850px;
+  background: rgb(7, 21, 37);
+}
+
+th {
+  background: rgb(16, 43, 67);
+  color: rgb(188, 230, 255);
+  font-size: 0.76rem;
+  text-align: left;
+  padding: 11px 9px;
+  white-space: nowrap;
+}
+
+td {
+  padding: 7px 8px;
+  border-top: 1px solid rgb(24, 60, 89);
+}
+
+td input {
+  width: 100%;
+  min-width: 65px;
+  padding: 8px;
+  border: 1px solid rgb(29, 69, 101);
+  border-radius: 8px;
+  font: inherit;
+  color: var(--ink);
+  background: rgb(6, 19, 33);
+}
+
+td input:focus {
+  outline: var(--rose2) solid 2px;
+}
+
+td.calc {
+  font-weight: 700;
+  color: rgb(119, 198, 255);
+  white-space: nowrap;
+}
+
+.table-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 12px;
+}
+
+button {
+  border: 0px;
+  border-radius: 12px;
+  padding: 11px 15px;
+  font-weight: 750;
+  font-size: 0.88rem;
+  cursor: pointer;
+  transition: transform 0.12s, filter 0.12s;
+}
+
+button:hover {
+  filter: brightness(0.98);
+  transform: translateY(-1px);
+}
+
+.primary {
+  background: linear-gradient(100deg, rgb(20, 126, 225), rgb(57, 169, 255));
+  color: rgb(255, 255, 255);
+}
+
+.secondary {
+  background: rgb(16, 44, 71);
+  color: rgb(185, 228, 255);
+}
+
+.remove {
+  background: rgb(44, 23, 35);
+  color: rgb(255, 157, 187);
+  padding: 8px 10px;
+}
+
+.metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 12px;
+}
+
+.metric {
+  padding: 16px;
+  border-radius: 17px;
+  background: linear-gradient(140deg, rgb(14, 41, 65), rgb(9, 26, 43));
+  border: 1px solid rgb(27, 69, 101);
+}
+
+.metric .k {
+  font-size: 0.78rem;
+  color: var(--muted);
+  font-weight: 700;
+}
+
+.metric .v {
+  font-size: 1.45rem;
+  font-weight: 850;
+  color: rgb(85, 184, 255);
+  margin: 7px 0px 3px;
+}
+
+.metric small {
+  color: var(--muted);
+  font-size: 0.76rem;
+}
+
+.results-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 13px;
+}
+
+.result {
+  border-radius: 17px;
+  padding: 17px;
+  background: linear-gradient(140deg, rgb(13, 35, 55), rgb(7, 21, 37));
+  border: 1px solid var(--line);
+}
+
+.result h3 {
+  font-size: 1rem;
+  margin: 0px 0px 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.big {
+  font-size: 1.5rem;
+  font-weight: 850;
+  color: rgb(85, 184, 255);
+  margin: 5px 0px;
+}
+
+.result p {
+  margin: 7px 0px;
+  font-size: 0.86rem;
+  color: var(--muted);
+  line-height: 1.45;
+}
+
+.result strong {
+  color: var(--ink);
+}
+
+.notice {
+  font-size: 0.8rem;
+  line-height: 1.5;
+  color: rgb(169, 201, 223);
+  background: rgb(24, 40, 58);
+  border: 1px solid rgb(56, 81, 106);
+  padding: 12px 14px;
+  border-radius: 12px;
+  margin-top: 13px;
+}
+
+.result-tabs {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0px, 1fr));
+  gap: 8px;
+  margin: 4px 0px 14px;
+  position: sticky;
+  top: 0px;
+  z-index: 5;
+  padding: 8px 0px;
+  background: rgba(4, 16, 29, 0.93);
+  backdrop-filter: blur(12px);
+}
+
+.tab-button {
+  background: rgb(11, 33, 53);
+  border: 1px solid rgb(27, 69, 101);
+  color: rgb(169, 201, 223);
+  padding: 12px 8px;
+  border-radius: 13px;
+  font-size: 0.84rem;
+  white-space: normal;
+  min-height: 48px;
+}
+
+.tab-button.active {
+  background: linear-gradient(100deg, rgb(20, 126, 225), rgb(57, 169, 255));
+  color: rgb(255, 255, 255);
+  border-color: rgb(83, 184, 255);
+  box-shadow: rgba(22, 137, 232, 0.2) 0px 5px 18px;
+}
+
+.tab-panel[hidden] {
+  display: none !important;
+}
+
+.tab-panel {
+  animation: 0.18s ease-out 0s 1 normal none running panelIn;
+}
+
+@keyframes panelIn {
+  0% {
+    opacity: 0.65;
+    transform: translateY(4px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+}
+
+@media (max-width: 540px) {
+  .result-tabs {
+    gap: 5px;
+  }
+  .tab-button {
+    font-size: 0.74rem;
+    padding: 10px 4px;
+    line-height: 1.2;
+  }
+}
+
+footer {
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.78rem;
+  padding: 0px 16px 28px;
+}
+
+.empty {
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+@media (max-width: 540px) {
+  header {
+    padding-top: 17px;
+  }
+  .chip {
+    font-size: 0.7rem;
+  }
+  .brand p {
+    font-size: 0.75rem;
+  }
+  .card {
+    padding: 13px;
+  }
+  .hero {
+    margin-top: 18px;
+  }
+}
